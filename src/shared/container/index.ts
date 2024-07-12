@@ -3,6 +3,8 @@ import { UsersRepository } from "../../modules/accounts/infra/sequelize/reposito
 import { IUsersRepository } from "../../modules/accounts/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "../../modules/accounts/repositories/IUsersTokensRepository";
 import { UsersTokensRepository } from "../../modules/accounts/infra/sequelize/repositories/UsersTokensRepository";
+import { IProductsRepository } from "../../modules/products/repositories/IProductsRepository";
+import { ProductsRepository } from "../../modules/products/infra/sequelize/repositories/ProductsRepository";
 
 container.registerSingleton<IUsersTokensRepository>(
   "UsersTokensRepository",
@@ -12,4 +14,9 @@ container.registerSingleton<IUsersTokensRepository>(
 container.registerSingleton<IUsersRepository>(
   "UsersRepository",
   UsersRepository
+);
+
+container.registerSingleton<IProductsRepository>(
+  "ProductsRepository",
+  ProductsRepository
 );
