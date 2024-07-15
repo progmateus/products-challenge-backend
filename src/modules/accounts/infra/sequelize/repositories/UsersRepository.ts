@@ -15,7 +15,7 @@ class UsersRepository implements IUsersRepository {
       name, email, password
     })
   }
-  async findById(id: string): Promise<User> {
+  async findById(id: number): Promise<User> {
     return this.repository.findByPk(id);
   }
   async findByEmail(email: string): Promise<User> {

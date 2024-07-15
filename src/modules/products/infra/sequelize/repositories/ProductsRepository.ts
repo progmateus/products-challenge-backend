@@ -41,6 +41,7 @@ class ProductsRepository implements IProductsRepository {
 
 
   async list(params = ""): Promise<Product[]> {
+    console.log("PARAMS: ", params)
     return await this.repository.findAll({
       where: {
         [Op.or]: {
