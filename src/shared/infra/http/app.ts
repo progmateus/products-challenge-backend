@@ -2,9 +2,9 @@ import "reflect-metadata";
 import "dotenv/config"
 import "../../../database/index"
 import express, { Request, Response, NextFunction } from "express";
-import swaggerUi from "swagger-ui-express"
 import "express-async-errors"
-import cors from "cors"
+import cors from "cors";
+import swaggerUi from "swagger-ui-express";
 
 import "../../container/index"
 import { router } from "./routes";
@@ -15,7 +15,7 @@ import swaggerFile from "../../../swagger.json"
 const app = express();
 app.use(express.json())
 app.use(cors());
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile))
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(router)
 
