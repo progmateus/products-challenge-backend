@@ -11,11 +11,12 @@ import { router } from "./routes";
 import { AppError } from "../../../errors/AppError";
 import swaggerFile from "../../../swagger.json"
 
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
 const app = express();
 app.use(express.json())
 app.use(cors());
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use("/docs", express.static('node_modules/swagger-ui-dist/', { index: false }), swaggerUi.serve, swaggerUi.setup(swaggerFile, { customCssUrl: CSS_URL }));
 
 app.use(router)
 
