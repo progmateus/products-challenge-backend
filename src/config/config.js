@@ -9,6 +9,7 @@ module.exports = {
     timestamps: true
   },
   ssl: true,
+  sslMode: true,
   dialectOptions: {
     ssl: {
       "require": true
