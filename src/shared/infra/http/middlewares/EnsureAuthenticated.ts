@@ -20,7 +20,6 @@ export async function ensureAuthenticated(
   }
 
   if (authHeader.length > 350) {
-    console.log("ENTROU NO IF")
     throw new AppError("ERR_INVALID_TOKEN", 401)
   }
 

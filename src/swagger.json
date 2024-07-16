@@ -1,0 +1,484 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Super Price",
+    "description": "This is api super price",
+    "version": "1.0.0",
+    "contact": {
+      "email": "contact@email.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Create User",
+        "description": "Route to create a user",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "400": {
+            "description": "ERR_BAD_REQUEST"
+          },
+          "409": {
+            "description": "ERR_USER_ALREADY_EXISTS"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "description": "Profile user",
+        "summary": "Profile user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ERR_INVALID_TOKEN"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Authenticate user",
+        "description": "Authenticate user",
+        "tags": [
+          "Authenticate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "refresh_token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ERR_BAD_REQUEST"
+          },
+          "401": {
+            "description": "ERR_INVALID_CREDENTIALS"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "summary": "Refresh token",
+        "description": "Refresh token",
+        "tags": [
+          "Authenticate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh_token": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ERR_REFRESH_TOKEN_NOT_FOUND"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "summary": "Create product",
+        "description": "Only users can use to route to create Product",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "params",
+            "in": "query",
+            "description": "Name or Description",
+            "required": false,
+            "type": "string",
+            "examples": {
+              "name": {
+                "value": "Casaco de Moletom Azul Marinho"
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "product": {
+                  "value": {
+                    "name": "Casaco de Moletom Azul Marinho",
+                    "description": "casaco de moletom",
+                    "price": 149.99
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ERR_BAD_REQUEST"
+          },
+          "401": {
+            "description": "ERR_INVALID_TOKEN"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      },
+      "get": {
+        "summary": "List Products",
+        "description": "Route to list all Products",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ERR_INVALID_TOKEN"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete all products",
+        "description": "Route to delete all products",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "DELETED"
+          },
+          "401": {
+            "description": "ERR_INVALID_TOKEN"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "delete": {
+        "description": "delete product by id",
+        "summary": "delete product by id",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of product",
+            "required": true,
+            "type": "string",
+            "examples": {
+              "id": {
+                "value": 1
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "DELETED"
+          },
+          "400": {
+            "description": "ERR_BAD_REQUEST"
+          },
+          "401": {
+            "description": "ERR_INVALID_TOKEN"
+          },
+          "404": {
+            "description": "ERR_PRODUCT_NOT_FOUND"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      }
+    },
+    "/products/generate": {
+      "post": {
+        "description": "Generate 50 randoms products",
+        "summary": "Generate 50 randoms products",
+        "tags": [
+          "Products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "ERR_INVALID_TOKEN"
+          },
+          "404": {
+            "description": "ERR_PRODUCT_NOT_FOUND"
+          },
+          "500": {
+            "description": "ERR_INTERNAL_SERVER_ERROR"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
