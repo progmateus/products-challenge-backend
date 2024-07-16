@@ -72,5 +72,16 @@ class ProductsRepository implements IProductsRepository {
     return await this.repository.bulkCreate(products)
   }
 
+  async deleteAll(): Promise<void> {
+    await this.repository.destroy({
+      where: {
+        id: {
+          [Op.not]: null
+        }
+      }
+    });
+  }
+
+
 }
 export { ProductsRepository }

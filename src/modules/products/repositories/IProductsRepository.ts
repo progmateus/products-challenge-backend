@@ -11,6 +11,7 @@ interface IProductsRepository {
   findByIdAndUserId(id: number, userId: number): Promise<Product>
   list(params: string): Promise<Product[]>
   createMany(products: IFakeProductDTO[]): Promise<Product[]>
+  deleteAll(): Promise<void>;
 }
 
 export { IProductsRepository }
