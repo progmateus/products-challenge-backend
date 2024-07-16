@@ -16,7 +16,7 @@ const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger
 const app = express();
 app.use(express.json())
 app.use(cors());
-app.use("/docs", express.static('node_modules/swagger-ui-dist/', { index: false }), swaggerUi.serve, swaggerUi.setup(swaggerFile, { customCssUrl: CSS_URL }));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile, { customCssUrl: CSS_URL }));
 
 app.use(router)
 
