@@ -8,11 +8,10 @@ module.exports = {
   define: {
     timestamps: true
   },
-  ssl: true,
-  sslMode: true,
   dialectOptions: {
     ssl: {
-      "require": true
+      require: true,
+      rejectUnauthorized: false
     }
   }
 }
