@@ -6,8 +6,10 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": {
-    "src": "(.*)",
-    "dest": "src/shared/infra/http/server.ts"
-  }
+  "routes": [
+    {
+      "src": "(.*)",
+      "dest": "src/shared/infra/http/server.ts"
+    }
+  ]
 }
